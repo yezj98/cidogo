@@ -1,6 +1,8 @@
 package com.codigo_app.Controller;
 
+
 import com.codigo_app.Model.eVoucher;
+
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class eVoucherController {
 
     private final eVoucherService eVoucherService;
+
 
     public eVoucherController(eVoucherService eVoucherService) {
         this.eVoucherService = eVoucherService;
@@ -54,5 +57,19 @@ public class eVoucherController {
     public ResponseEntity<eVoucher> getVoucherById(@PathVariable Long id) {
         eVoucher voucher = eVoucherService.getVoucherById(id);
         return ResponseEntity.ok(voucher);
+    }
+
+
+    /*eStore API S/N 2: Checkout*/
+    @PutMapping("/{id}/checkout")
+    public ResponseEntity<eVoucher> purchaseVoucher(@PathVariable Long id,
+                                                    @RequestParam("buyerFirstName") String buyerFirstName,
+                                                    @RequestParam("buyerLastName") String buyerLastName,
+                                                    @RequestParam("buyerPhoneNumber") String buyerPhoneNumber,
+                                                    @RequestParam("cardNumber") String cardNumber,
+                                                    @RequestParam("cardExpiry") String cardExpiry,
+                                                    @RequestParam("cardCvv") String cardCvv) {
+        eVoucher purchasedVoucher = eVoucherService.makePayment(id, buyerFirstName, buyerLastName, buyerPhoneNumber, cardNumber, cardExpiry, cardCvv);
+        return ResponseEntity.ok(purchasedVoucher);
     }
 }

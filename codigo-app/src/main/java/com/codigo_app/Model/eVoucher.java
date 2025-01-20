@@ -14,6 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "e_voucher")
 public class eVoucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -204,4 +205,5 @@ public class eVoucher {
     public void setStatus(VourcherStatus status) {
         this.status = status;
     }
+
 }
